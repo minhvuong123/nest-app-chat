@@ -17,7 +17,11 @@ export class AuthService implements IAuthService {
     if (!user) {
       throw new HttpException('Invalid Credentials', HttpStatus.UNAUTHORIZED);
     }
+    const isPasswordValid = compareHash(
+      userCredentialDetails.password,
+      user.password,
+    );
 
-    return compareHash(userCredentialDetails.password, user.password);
+    return isPasswordValid ? user : null;
   }
 }
